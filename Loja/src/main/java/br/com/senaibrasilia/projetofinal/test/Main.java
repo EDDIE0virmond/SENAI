@@ -1,11 +1,8 @@
 package br.com.senaibrasilia.projetofinal.test;
 import java.math.BigDecimal;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import br.com.senaibrasilia.projetofinal.dao.CategoriaDAO;
 import br.com.senaibrasilia.projetofinal.dao.ProductDAO;
@@ -47,6 +44,25 @@ public class Main {
 		System.out.println("SUA Descricao");
 		String new_descricao_product = scanner.next();
 		cadastroProduct(categoria, new_value_product, new_name_product, new_descricao_product);
+		System.out.println("Deseja alterar, digite o id, se quiser sair digite -1 \n"
+				+ "Quantidade de ids eles sao lineares " + productDAO.retorneTodosOsProdutos().size() + "\n");
+		int dd = scanner.nextInt();
+		if (dd != -1) 
+		{
+			System.out.println("Alterar a categora");
+			String category = scanner.next();
+			atualizarProdCategory(category, dd);
+			System.out.println("Alterar o nome");
+			String nome = scanner.next();
+			atualizarProdName(nome , dd);
+			System.out.println("Alterar a descricao");
+			String description = scanner.next();
+			atualizarProdDescription(description, dd);
+			System.out.println("Alterar o valor");
+			double val = scanner.nextDouble();
+			atualizarProdValue(val, dd);
+			
+		}
 		manager.close();
 
 	}
@@ -59,5 +75,38 @@ public class Main {
 		productDAO.cadastrar(product);
 		manager.getTransaction().commit();
 		
+	}
+	private static void atualizarProdName( String name, int id) 
+	{
+		Product product = productDAO.bucar(id);
+		product.setName(name);
+		manager.getTransaction().begin();
+		productDAO.atualizar(product);
+		manager.getTransaction().commit();
+	}
+	private static void atualizarProdDescription( String name, int id) 
+	{
+		Product product = productDAO.bucar(id);
+		product.setDescription(name);
+		manager.getTransaction().begin();
+		productDAO.atualizar(product);
+		manager.getTransaction().commit();
+		
+	}
+	private static void atualizarProdCategory( String name, int id) 
+	{
+		Product product = productDAO.bucar(id);
+		product.getCatgory().setName(name);
+		manager.getTransaction().begin();
+		productDAO.atualizar(product);
+		manager.getTransaction().commit();
+	}
+	private static void atualizarProdValue( double value, int id) 
+	{
+		Product product = productDAO.bucar(id);
+		product.setPrice(new BigDecimal(value));
+		manager.getTransaction().begin();
+		productDAO.atualizar(product);
+		manager.getTransaction().commit();
 	}
 }
