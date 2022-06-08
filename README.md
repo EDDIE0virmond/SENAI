@@ -1,6 +1,4 @@
-<style>
-        background-color: crimson;
-    </style>
+
 <h1> Projeto Escola </h1>
   <h2> Sistemas MultiStack </h2>
     <h3> Professor Romulo Cesar </h3
